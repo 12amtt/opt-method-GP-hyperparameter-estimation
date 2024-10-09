@@ -1,0 +1,23 @@
+\chapter{Introduction} 
+
+% Description of the work. Prepare the reader for the following chapters.
+
+% You will cite literature here, typically, but
+
+Gaussian process (GP) regression, or kriging (\cite{eidsvik2011spatial}), is a popular non-parametric function model that combines the characteristics of easy-implementing, flexibility, and modelling accuracy. Gaussian Processes (GPs) have applications in various areas, such as non-parametric regression, time series or spatial data, and emulation of large computer models (\cite{kennedy2001bayesian}). The defining features of a GP are its mean function and covariance function (kernel), which are parameterised by different variables; depending on different classes of covariance function. Hyper-parameters in GPs include parameters of the covariance function, the noise variance and, in some cases, parameters of the mean function. The covariance function, which defines the similarity between data points, is particularly sensitive and crucial; as it directly affects the smoothness and overall shape of the predicted function. In this thesis, we focus on the Mat\'ern class of covariance functions (\cite{williams2006gaussian}). 
+
+The practical utility of GPs largely depends on the accurate estimation of hyper-parameters, a process that can be challenging due to the non-convex, often multimodal nature of the likelihood function and the computational infeasibility for many large datasets. The optimization of GP hyper-parameters is typically achieved by maximizing the marginal likelihood (\cite{williams2006gaussian}), which is non-trivial due to the aforementioned characteristics. Consequently, various optimization methods can be employed to tackle this problem, each with its own advantages and limitations. Gradient-based methods, such as gradient descent (GD), which is one of the oldest and best known numerical optimization methods, and its variants, such as Nesterov Accelerated Gradient Descent (\cite{nesterov2004introductory}), leverage the gradient information to navigate the iteration steps. Moreover, Newton's method uses the second-derivative information to approach the local optima, and quasi-Newton methods; such as Fisher Scoring, BFGS and limited-memory BFGS (L-BFGS), are also commonly considered in unconstrained optimization (\cite{NoceWrig06}). On the other hand, derivative-free methods offer an alternative by exploring the parameter space without relying on gradient information. 
+
+% Actually, the practical use of GP is prone to the model misspecification. Some studies have been done to show that 
+
+
+This thesis aims to provide a comprehensive comparison of these different optimization methods in the context of Gaussian process hyper-parameter estimation, by systematically evaluating their performance, computational efficiency, and robustness across different scenarios and datasets. Such an analysis will provide practical insights for selecting the most appropriate approach for specific applications. 
+
+Chapter 2 describes the concepts of Gaussian process, hyper-parameter estimation, and techniques of six optimization methods. Chapter 3 presents the experimental results of (i) simulated GPs with different settings, (ii) GPs with model mis-specification, and (iii) deterministic functions.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "MasterThesisSfS"
+%%% End: 

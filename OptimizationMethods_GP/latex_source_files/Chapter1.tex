@@ -1,0 +1,51 @@
+\chapter{Background} 
+
+\section{Gaussian Process}
+Gaussian process (GP) is defined as a collection of random variables, any finite number of which have a joint Gaussian distribution. A Gaussian process model can be fully specified by its mean function $m(\bold{x})$ and covariance function $k(\bold{x},\bold{x'})$, denoted as $Y \sim \text{GP}(m(\bold{x}), k(\bold{x}, \bold{x'}))$ in $\mathbb{R}^d (d \geq 1)$. The covariance function defines the similarity between data points, and it can reflect the prior information of the distribution from which the data are drawn. In this thesis, we focus on the Mat\'ern class of covariance functions (\cite{williams2006gaussian}), which is defined as
+
+\begin{equation}
+    k_\text{Matern}(r) = \frac{2^{1-\nu}}{\Gamma(\nu)} \bigg(\frac{\sqrt{2\nu r}}{\ell}\bigg)^\nu K_\nu \bigg(\frac{\sqrt{2\nu r}}{\ell}\bigg), \ \nu, \ell > 0
+\end{equation}
+
+where $K_\nu$ is a modified Bessel function, $\nu$ and $\ell$ are the smoothness and range parameter of the kernel, respectively. The covariance function is assumed to be the addition of the signal term and an independent noise term:
+
+\begin{equation}
+    \sigma^2_f \cdot k_\text{Matern}(r) + \sigma^2_n \cdot I_{r=0}
+\end{equation}
+
+where $\sigma^2_f$ and $\sigma^2_n$ are the signal and noise variance, respectively.
+
+According to different smoothness $\nu$, the Mat\'ern class of covariance function can actually be recognized as some more familiar covariance function. For example, the covariance function in Eq.(1) converges to the squared exponential covariance (Gaussian covariance) as $\nu \xrightarrow{}\infty$, or exponential covariance when $\nu = 0.5$. Moreover, $\nu = 1.5$ and $\nu = 2.5$ are also two interesting covariance functions for many machine learning problems. 
+
+We use four types of covariance functions with smoothness $\nu \in (0.5, 1.5, 2.5, \inf)$ in our experiments and assume a zero mean function in most of the experiments (except in Section 3.1.2 and 3.1.4, where we investigate the influence of an additional linear regression term).
+
+\section{Hyperparameter estimation}
+
+Training a GP model is actually finding the optimal estimate of the parameters in the mean function $m(\bold{x})$ and the covariance function $k(\bold{x},\bold{x}')$, also known as \textit{model selection}. In this thesis, we will only consider the GP models with the mean function $m(\bold{x})$ as zero or linear regression terms. In addition to the potential linear regression coefficients $\boldsymbol{\beta}$, the hyper-parameters $\ell, \sigma^2_f, \sigma^2_n$ of GP models are estimated using \textit{maximum likelihood estimation} (MLE) method. The log marginal likelihood of the observed data is given in Eq.(3) (\cite{williams2006gaussian}).
+
+\begin{equation}
+    \log p(\bold{y}|X, \boldsymbol{\theta}) = -\frac{1}{2}\bold{y}^\top K^{-1}_y \bold{y} - \frac{1}{2} \log |K_y| - \frac{n}{2}\log(2\pi),
+\end{equation}
+
+where $K_y$ is the covariance function given in Eq.(2), and $\bold{y}$ is replaced by $\bold{y}- Z \boldsymbol{\beta}$ in the presence of the linear regression term, represented by $Z \boldsymbol{\beta}$. The derivative of the log marginal likelihood with respect to the hyper-parameters $\boldsymbol{\theta}$ is:
+
+\begin{equation}
+    \frac{\partial}{\partial \theta_j} \log p(\bold{y}|X, \boldsymbol{\theta}) = \frac{1}{2} \text{tr}\bigg((\boldsymbol{\alpha} \boldsymbol{\alpha}^\top - K_y^{-1}) \frac{\partial K_y}{\partial \theta_j} \bigg) \ \text{where} \ \boldsymbol{\alpha} = K^{-1}_y\bold{y}
+\end{equation}
+
+The gradient-based optimization methods use this derivative, with the computational complexity of $\mathcal{O}(n^3)$, to obtain the hyper-parameters that maximize the log marginal likelihood.
+
+\section{Optimization methods}
+Several optimization methods for hyper-parameter estimation are compared: (i) Gradient Descent (GD), (ii) GD with Nesterov acceleration, (iii) Newton's, (iv) Limited-memory BFGS (LBFGS), (v) Fisher Scoring, and (vi) Nelder-Mead.
+
+The methods except Nelder-Mead are gradient-based optimization methods. Gradient descent finds the local optimum of the objective function by taking steps proportional to the negative gradient, and Nesterov Accelerated Gradient Descent (\cite{nesterov2004introductory}), also known as Nesterov Momentum, is a faster modification based on ordinary gradient descent.
+
+Newton's method calculates the exact second derivatives of log marginal likelihood in Eq.(3). BFGS approximates the iterative direction of Newton's method and avoids calculating the second derivatives, and based on this, LBFGS uses a limited amount of computer memory (\cite{NoceWrig06}). Fisher Scoring method also takes the form of Newton's, but uses an expected information matrix called Fisher information to replace the second derivative matrix in Newton's. Nelder-Mead uses a heuristic search strategy that requires a number of evaluations of function values per iteration.
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "MasterThesisSfS"
+%%% End: 

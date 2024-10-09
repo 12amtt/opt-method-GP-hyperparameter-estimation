@@ -1,0 +1,19 @@
+\chapter{Conclusions}
+\label{s:Conclusions}
+
+In this thesis, we have explored the performance of different optimization methods for Gaussian processes hyper-parameter estimation based on \texttt{GPBoost} library, taking into account the training time, for both probabilistic and deterministic functions, and in both regression and classification models. We also include two state-of-the-art approximations (Vecchia, FITC) for GP models to reduce the computational time and space complexity as large as $\mathcal{O}(n^3)$ and $\mathcal{O}(n^2)$ in large scale optimization.
+
+As can be seen from the results, LBFGS shows an excellent and more stable performance in terms of both training speed and convergence robustness compared to the other methods. Gradient Descent shows robustness in case of mis-specification, but still risks a slower training speed and is susceptible to the shape of the log marginal likelihood. GD, Newton and Fisher-scoring can get stuck in local optima and struggle with non-convex objective functions, making them excruciatingly slow on some difficult problems. Nelder-Mead, the derivative-free method, can perform in some circumstance but unable to cope with the increasing numbers of parameters and has a higher computational cost. 
+
+The experimental results also show that many factors, such as initialization strategy and reparameterization, affect the convergence time of the optimization methods. By choosing a reasonable starting point, the optimization methods, especially Newton's method, could perform significantly better. The \textit{log} reparameterization of the hyper-parameters $(\rho, \sigma^2_f, \sigma^2_n)$ with positive constraints could facilitate the convergence, which is also suggested in \cite{basak2021numerical}.
+
+The choice of optimization method depends on the specific context and requirements of the application. Different optimization methods have their own advantages depending on the nature of data and the objective function. Without knowing much information about the underlying distribution, LBFGS can be a better and versatile choice for various optimization landscapes, but combining the characteristics of dataset and the computational environment is still necessary. Future research could focus on including more types of simulation data and investigating the real world dataset.
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "MasterThesisSfS"
+%%% End: 
