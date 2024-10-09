@@ -1,2 +1,4 @@
-# optimizaiton-method-for-GP-hyper-parameter-estimation
-Master's Thesis repository
+# "Optimization Methods for Gaussian Process Hyper-parameter Estimation" (Master's Thesis)
+
+# Abstract
+Gaussian process (GP) is a flexible statistical and machine learning model that is widely used in applications involving time series or spatial data. To make predictions based on this model, several hyper-parameters in the covariance function have to be estimated. In this thesis, we perform a systematic comparison of several commonly used optimization methods, which based on gradients, secondary derivatives, or heuristic search strategy, for the estimation of Gaussian process hyper-parameters from the perspective of training speed, convergence performance, pros and cons. Approximation methods are used for the large spatial data to reduce the computation burden. Simulated data samples of different settings and distributions will be used to test the performance of the optimization methods, then theoretical and experimental comparison will be summarized.
